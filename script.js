@@ -822,27 +822,9 @@ function renderLayers(){
 
         },
 
-
-        onEachFeature:
-          (feature,layer)=>{
-
-            layer.bindTooltip(
-
-              palmName(
-                feature
-              ),
-
-              {
-
-                sticky:true,
-
-                direction:"top"
-
-              }
-
-            );
-
-          }
+        onEachFeature:(f,l)=>{
+        // No concession/company information shown on hover.
+        }
 
       }
 
