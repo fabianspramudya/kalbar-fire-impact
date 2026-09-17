@@ -1,6 +1,7 @@
 GEOSPATIAL FIRE PATTERN SCREENING
 
 Forest Fires: Intentional or Not?
+https://fabianspramudya.github.io/kalbar-fire-impact/
 
 Explore the spatial pattern of active fire detections in West Kalimantan and their relationship with villages and oil-palm concessions. 
 Fire detections are grouped by spatial density and proximity on the acquisition date of July - August 2026
