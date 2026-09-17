@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="WebGIS kebakaran hutan Kalimantan Barat — density-based fire pattern screening.">
+  <title>Kebakaran Hutan Kalimantan Barat — Sengaja atau Tidak?</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">KALBAR <span>FIRE PATTERN</span></div>
+  <nav>
+    <a href="#home" data-i18n="nav.home">Beranda</a>
+    <a href="#map-section" data-i18n="nav.map">Peta</a>
+    <a href="#method" data-i18n="nav.method">Metodologi</a>
+  </nav>
+  <div class="language-switch">
+    <button data-lang="id" class="active">ID</button>
+    <button data-lang="en">EN</button>
+  </div>
+</header>
+
+<section id="home" class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="eyebrow">GEOSPATIAL FIRE PATTERN SCREENING</div>
+    <h1 data-i18n="hero.title">Kebakaran Hutan:<br>Sengaja atau Tidak?</h1>
+    <p data-i18n="hero.desc">
+      Eksplorasi pola spasial titik api di Kalimantan Barat dan hubungannya
+      dengan desa serta konsesi sawit. Sistem mengelompokkan deteksi api
+      berdasarkan kepadatan dan kedekatan spasial pada tanggal pengamatan.
+    </p>
+    <button id="visitMapBtn" class="primary-btn" data-i18n="hero.button">Lihat Peta</button>
+  </div>
+</section>
+
+<section id="map-section" class="map-page">
+  <div class="map-header">
+    <div>
+      <div class="eyebrow dark">INTERACTIVE WEBGIS</div>
+      <h2 data-i18n="map.title">Pola Kebakaran Kalimantan Barat</h2>
+      <p class="map-subtitle" data-i18n="map.subtitle">Titik api, batas desa, dan konsesi sawit.</p>
+    </div>
+    <button id="resetMapBtn" class="secondary-btn" data-i18n="map.reset">Reset Peta</button>
+  </div>
+
+  <div class="webgis-layout">
+    <div class="map-wrap">
+      <div id="map"></div>
+      <div class="map-legend">
+        <div><span class="legend-dot natural"></span><span data-i18n="legend.natural">Natural Fire</span></div>
+        <div><span class="legend-dot anthropogenic"></span><span data-i18n="legend.anthro">Anthropogenic Fire</span></div>
+        <div><span class="legend-box village"></span><span data-i18n="legend.village">Batas desa</span></div>
+        <div><span class="legend-box palm"></span><span data-i18n="legend.palm">Konsesi sawit</span></div>
+        <div class="legend-order" data-i18n="legend.order">Urutan: Desa → Konsesi → Natural hotspot → Anthropogenic hotspot</div>
+      </div>
+    </div>
+
+    <aside class="sidebar">
+      <section class="panel">
+        <div class="panel-title" data-i18n="analysis.title">Analisis Spasial</div>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span data-i18n="stats.totalFire">Total titik api</span>
+            <strong id="totalFire">...</strong>
+          </div>
+          <div class="stat-card">
+            <span data-i18n="stats.palmVillage">Desa dengan sawit</span>
+            <strong id="palmVillagePercent">...</strong>
+          </div>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span data-i18n="stats.fireVillage">Desa dengan titik api</span>
+            <strong id="fireVillages">...</strong>
+          </div>
+          <div class="stat-card">
+            <span data-i18n="stats.firePalm">Konsesi dengan titik api</span>
+            <strong id="firePalm">...</strong>
+          </div>
+        </div>
+        <div class="big-stat">
+          <span data-i18n="stats.anthroShare">Proporsi Anthropogenic Fire</span>
+          <strong id="anthroShare">...%</strong>
+        </div>
+        <p class="small-note" data-i18n="analysis.note">
+          Kelas api adalah hasil screening berbasis kepadatan spasial, bukan
+          penetapan hukum atau verifikasi penyebab kebakaran.
+        </p>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title" data-i18n="basemap.title">Basemap</div>
+        <div class="basemap-buttons">
+          <button class="layer-btn active" data-basemap="light">Light</button>
+          <button class="layer-btn" data-basemap="satellite">Satellite</button>
+        </div>
+        <p class="small-note" data-i18n="basemap.note">
+          Light menggunakan OpenStreetMap Standard. Satellite menggunakan ArcGIS World Imagery.
+        </p>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title" data-i18n="hover.title">Detail Titik Api</div>
+        <div id="fireInfo" class="selection-box" data-i18n="hover.empty">
+          Arahkan kursor ke titik api pada peta.
+        </div>
+      </section>
+    </aside>
+  </div>
+</section>
+
+<section id="method" class="methodology-section">
+  <div class="methodology-layout">
+    <div class="methodology-intro">
+      <div class="eyebrow dark">METHODOLOGY</div>
+      <h2 data-i18n="method.title">Bagaimana pola api diklasifikasikan?</h2>
+      <p data-i18n="method.intro">
+        Pendekatan ini menggunakan unsupervised density-based clustering.
+        Titik api yang membentuk kelompok padat pada tanggal pengamatan
+        diberi label operasional Anthropogenic Fire, sedangkan titik yang
+        tidak masuk cluster diberi label Natural Fire. Label ini adalah
+        proxy pola spasial, bukan bukti kausal.
+      </p>
+    </div>
+
+    <div class="methodology-cards">
+      <article class="method-card">
+        <span class="method-number">01</span>
+        <h3 data-i18n="cards.c1.t">Input & Quality</h3>
+        <p data-i18n="cards.c1.p">Menggabungkan deteksi SNPP dan Aqua MODIS yang sudah di-clip terhadap AOI batas desa Kalimantan Barat.</p>
+      </article>
+      <article class="method-card">
+        <span class="method-number">02</span>
+        <h3 data-i18n="cards.c2.t">Spatial Neighbourhood</h3>
+        <p data-i18n="cards.c2.p">Untuk setiap titik dihitung jumlah deteksi dalam radius 5 km pada tanggal akuisisi yang sama.</p>
+      </article>
+      <article class="method-card">
+        <span class="method-number">03</span>
+        <h3 data-i18n="cards.c3.t">DBSCAN</h3>
+        <p data-i18n="cards.c3.p">DBSCAN membentuk cluster berbasis density, mampu menangani bentuk cluster yang tidak beraturan dan noise.</p>
+      </article>
+      <article class="method-card">
+        <span class="method-number">04</span>
+        <h3 data-i18n="cards.c4.t">Operational Class</h3>
+        <p data-i18n="cards.c4.p">Anggota cluster diberi label Anthropogenic Fire; noise DBSCAN diberi label Natural Fire sebagai proxy sparsity.</p>
+      </article>
+      <article class="method-card">
+        <span class="method-number">05</span>
+        <h3 data-i18n="cards.c5.t">Interpretation</h3>
+        <p data-i18n="cards.c5.p">Density, cluster size, neighbour count, FRP, brightness dan confidence ditampilkan untuk interpretasi pola.</p>
+      </article>
+      <article class="method-card">
+        <span class="method-number">06</span>
+        <h3 data-i18n="cards.c6.t">Limitation</h3>
+        <p data-i18n="cards.c6.p">Kepadatan saja tidak dapat membuktikan penyebab. Causal attribution membutuhkan data tambahan seperti land use, meteorologi, topografi dan aktivitas manusia.</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="references">
+    <h3 data-i18n="refs.title">Referensi metodologis</h3>
+    <ol>
+      <li>Ester, M. et al. (1996), <em>A Density-Based Algorithm for Discovering Clusters in Large Spatial Databases with Noise</em>, KDD-96. <a href="https://aaai.org/papers/kdd96-037-a-density-based-algorithm-for-discovering-clusters-in-large-spatial-databases-with-noise/" target="_blank" rel="noopener">AAAI</a></li>
+      <li>NASA Earthdata, <em>MODIS Collection 6 Active Fire Product User's Guide</em>. <a href="https://www.earthdata.nasa.gov/sites/default/files/imported/MODIS_C6_Fire_User_Guide_B.pdf" target="_blank" rel="noopener">NASA Earthdata</a></li>
+      <li>Su, H.Y. et al. (2023), <em>An improved spatio-temporal clustering method for extracting fire footprints based on MCD64A1</em>, International Journal of Wildland Fire, 32(5), 679–693. DOI: 10.1071/WF22198.</li>
+      <li data-i18n="refs.c4">NASA FIRMS guidance notes that FRP is a proxy for fire intensity and that sensor characteristics affect FRP comparability.</li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  <div data-i18n="footer">West Kalimantan Fire Pattern Screening BINUS University</div>
+  <div class="data-providers" data-i18n="providers">Data providers: Greenpeace; VIIRS on Suomi NPP (SNPP); MODIS on Aqua.</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
