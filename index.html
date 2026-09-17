@@ -102,9 +102,25 @@
       </section>
 
       <section class="panel">
-        <div class="panel-title" data-i18n="hover.title">Detail Titik Api</div>
-        <div id="fireInfo" class="selection-box" data-i18n="hover.empty">
-          Arahkan kursor ke titik api pada peta.
+        <div class="panel-title" data-i18n="hover.title">Analisis Temporal Kebakaran</div>
+
+        <div class="date-filter">
+          <div class="date-range-labels">
+            <span id="startDateLabel">—</span>
+            <span id="endDateLabel">—</span>
+          </div>
+
+          <div class="range-slider" aria-label="Fire date range">
+            <input id="startDateSlider" type="range" min="0" max="0" value="0" step="1" aria-label="Start date">
+            <input id="endDateSlider" type="range" min="0" max="0" value="0" step="1" aria-label="End date">
+          </div>
+
+          <div class="date-filter-summary">
+            <span data-i18n="timeseries.selected">Deteksi pada periode</span>
+            <strong id="filteredFireCount">—</strong>
+          </div>
+
+          <div id="fireTimeSeries" class="fire-timeseries"></div>
         </div>
       </section>
     </aside>
@@ -115,7 +131,7 @@
   <div class="methodology-layout">
     <div class="methodology-intro">
       <div class="eyebrow dark">METHODOLOGY</div>
-      <h2 data-i18n="method.title">Bagaimana pola api diklasifikasikan?</h2>
+      <h2 data-i18n="method.title">Bagaimana<br>Pola Api<br>Diklasifikasikan?</h2>
       <p data-i18n="method.intro">
         Pendekatan ini menggunakan unsupervised density-based clustering.
         Titik api yang membentuk kelompok padat pada tanggal pengamatan

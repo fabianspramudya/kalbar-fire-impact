@@ -1,4 +1,4 @@
-const VERSION="1.0.0";
+const VERSION="1.1.0";
 
 const KALBAR_VIEW=[
   [-3.1,108.7],
@@ -14,285 +14,163 @@ const DATA={
 const I18N={
 
   id:{
-
     "nav.home":"Beranda",
     "nav.map":"Peta",
     "nav.method":"Metodologi",
 
-    "hero.title":
-      "Kebakaran Hutan:<br>Sengaja atau Tidak?",
+    "hero.title":"Kebakaran Hutan:<br>Sengaja atau Tidak?",
+    "hero.desc":"Eksplorasi pola spasial titik api di Kalimantan Barat dan hubungannya dengan desa serta konsesi sawit. Sistem mengelompokkan deteksi api berdasarkan kepadatan dan kedekatan spasial pada tanggal pengamatan.",
+    "hero.button":"Lihat Peta",
 
-    "hero.desc":
-      "Eksplorasi pola spasial titik api di Kalimantan Barat dan hubungannya dengan desa serta konsesi sawit. Sistem mengelompokkan deteksi api berdasarkan kepadatan dan kedekatan spasial pada tanggal pengamatan.",
+    "map.title":"Pola Kebakaran Kalimantan Barat",
+    "map.subtitle":"Titik api, batas desa, dan konsesi sawit.",
+    "map.reset":"Reset Peta",
 
-    "hero.button":
-      "Lihat Peta",
+    "legend.natural":"Natural Hotspot",
+    "legend.anthro":"Anthropogenic Hotspot",
+    "legend.village":"Batas desa",
+    "legend.palm":"Konsesi sawit",
 
-    "map.title":
-      "Pola Kebakaran Kalimantan Barat",
+    "analysis.title":"Analisis Spasial",
+    "stats.palmVillage":"Desa dengan sawit",
+    "stats.fireVillage":"Desa dengan titik api",
+    "stats.firePalm":"Konsesi dengan titik api",
+    "stats.totalFire":"Total titik api",
+    "stats.anthroShare":"Proporsi Anthropogenic Fire",
 
-    "map.subtitle":
-      "Titik api, batas desa, dan konsesi sawit.",
+    "analysis.note":"Kelas api adalah hasil screening berbasis kepadatan spasial, bukan penetapan hukum atau verifikasi penyebab kebakaran.",
 
-    "map.reset":
-      "Reset Peta",
+    "basemap.title":"Basemap",
+    "basemap.note":"Light menggunakan OpenStreetMap Standard. Satellite menggunakan ArcGIS World Imagery.",
 
-    "legend.natural":
-      "Natural Hotspot",
+    "hover.title":"Analisis Temporal Kebakaran",
+    "hover.empty":"Gunakan rentang tanggal untuk memfilter deteksi api.",
 
-    "legend.anthro":
-      "Anthropogenic Hotspot",
+    "timeseries.selected":"Deteksi pada periode",
+    "timeseries.anthro":"Anthropogenic",
+    "timeseries.natural":"Natural",
+    "timeseries.noData":"Tidak ada deteksi pada periode ini.",
 
-    "legend.village":
-      "Batas desa",
+    "method.title":"Bagaimana<br>Pola Api<br>Diklasifikasikan", 
+    "method.intro":"Pendekatan ini menggunakan unsupervised density-based clustering. Titik api yang membentuk kelompok padat pada tanggal pengamatan diberi label operasional Anthropogenic Fire, sedangkan titik yang tidak masuk cluster diberi label Natural Fire. Label ini adalah proxy pola spasial, bukan bukti kausal.",
 
-    "legend.palm":
-      "Konsesi sawit",
+    "cards.c1.t":"Input & Quality",
+    "cards.c1.p":"Menggabungkan deteksi SNPP dan Aqua MODIS yang sudah di-clip terhadap AOI batas desa Kalimantan Barat.",
 
-    "legend.order":
-      "Urutan: Desa → Konsesi → Natural hotspot → Anthropogenic hotspot",
+    "cards.c2.t":"Spatial Neighbourhood",
+    "cards.c2.p":"Untuk setiap titik dihitung jumlah deteksi dalam radius 5 km pada tanggal akuisisi yang sama.",
 
-    "analysis.title":
-      "Analisis Spasial",
+    "cards.c3.t":"DBSCAN",
+    "cards.c3.p":"DBSCAN membentuk cluster berbasis density, mampu menangani bentuk cluster yang tidak beraturan dan noise.",
 
-    "stats.palmVillage":
-      "Desa bertampalan sawit",
+    "cards.c4.t":"Operational Class",
+    "cards.c4.p":"Anggota cluster diberi label Anthropogenic Fire; noise DBSCAN diberi label Natural Fire sebagai proxy sparsity.",
 
-    "stats.fireVillage":
-      "Desa dengan titik api",
+    "cards.c5.t":"Interpretation",
+    "cards.c5.p":"Density, cluster size, neighbour count, FRP, brightness dan confidence ditampilkan untuk interpretasi pola.",
 
-    "stats.firePalm":
-      "Konsesi dengan titik api",
+    "cards.c6.t":"Limitation",
+    "cards.c6.p":"Kepadatan saja tidak dapat membuktikan penyebab. Causal attribution membutuhkan data tambahan seperti land use, meteorologi, topografi dan aktivitas manusia.",
 
-    "stats.totalFire":
-      "Total titik api",
+    "refs.title":"Referensi metodologis",
+    "refs.c4":"NASA FIRMS menjelaskan FRP sebagai proxy intensitas api dan bahwa karakteristik sensor memengaruhi perbandingan FRP.",
 
-    "stats.anthroShare":
-      "Proporsi Anthropogenic Fire",
-
-    "analysis.note":
-      "Kelas api adalah hasil screening berbasis kepadatan spasial, bukan penetapan hukum atau verifikasi penyebab kebakaran.",
-
-    "basemap.title":
-      "Basemap",
-
-    "basemap.note":
-      "Light menggunakan OpenStreetMap Standard. Satellite menggunakan ArcGIS World Imagery.",
-
-    "hover.title":
-      "Detail Titik Api",
-
-    "hover.empty":
-      "Arahkan kursor ke titik api pada peta.",
-
-    "method.title":
-      "Bagaimana pola api diklasifikasikan?",
-
-    "method.intro":
-      "Pendekatan ini menggunakan unsupervised density-based clustering. Titik api yang membentuk kelompok padat pada tanggal pengamatan diberi label operasional Anthropogenic Fire, sedangkan titik yang tidak masuk cluster diberi label Natural Fire. Label ini adalah proxy pola spasial, bukan bukti kausal.",
-
-    "cards.c1.t":
-      "Input & Quality",
-
-    "cards.c1.p":
-      "Menggabungkan deteksi SNPP dan Aqua MODIS yang sudah di-clip terhadap AOI batas desa Kalimantan Barat.",
-
-    "cards.c2.t":
-      "Spatial Neighbourhood",
-
-    "cards.c2.p":
-      "Untuk setiap titik dihitung jumlah deteksi dalam radius 5 km pada tanggal akuisisi yang sama.",
-
-    "cards.c3.t":
-      "DBSCAN",
-
-    "cards.c3.p":
-      "DBSCAN membentuk cluster berbasis density, mampu menangani bentuk cluster yang tidak beraturan dan noise.",
-
-    "cards.c4.t":
-      "Operational Class",
-
-    "cards.c4.p":
-      "Anggota cluster diberi label Anthropogenic Fire; noise DBSCAN diberi label Natural Fire sebagai proxy sparsity.",
-
-    "cards.c5.t":
-      "Interpretation",
-
-    "cards.c5.p":
-      "Density, cluster size, neighbour count, FRP, brightness dan confidence ditampilkan untuk interpretasi pola.",
-
-    "cards.c6.t":
-      "Limitation",
-
-    "cards.c6.p":
-      "Kepadatan saja tidak dapat membuktikan penyebab. Causal attribution membutuhkan data tambahan seperti land use, meteorologi, topografi dan aktivitas manusia.",
-
-    "refs.title":
-      "Referensi metodologis",
-
-    "refs.c4":
-      "NASA FIRMS menjelaskan FRP sebagai proxy intensitas api dan bahwa karakteristik sensor memengaruhi perbandingan FRP.",
-
-    "footer":
-      "West Kalimantan Fire Pattern Screening BINUS University",
-
-    "providers":
-      "Data providers: Greenpeace; VIIRS on Suomi NPP (SNPP); MODIS on Aqua."
-
+    "footer":"West Kalimantan Fire Pattern Screening BINUS University",
+    "providers":"Data providers: Greenpeace; VIIRS on Suomi NPP (SNPP); MODIS on Aqua."
   },
 
   en:{
+    "nav.home":"Home",
+    "nav.map":"Map",
+    "nav.method":"Methodology",
 
-    "nav.home":
-      "Home",
+    "hero.title":"Forest Fires:<br>Intentional or Not?",
+    "hero.desc":"Explore the spatial pattern of active fire detections in West Kalimantan and their relationship with villages and oil-palm concessions. Fire detections are grouped by spatial density and proximity on the acquisition date.",
+    "hero.button":"View Map",
 
-    "nav.map":
-      "Map",
+    "map.title":"West Kalimantan Fire Patterns",
+    "map.subtitle":"Fire detections, village boundaries, and oil-palm concessions.",
+    "map.reset":"Reset Map",
 
-    "nav.method":
-      "Methodology",
+    "legend.natural":"Natural Hotspot",
+    "legend.anthro":"Anthropogenic Hotspot",
+    "legend.village":"Village boundary",
+    "legend.palm":"Oil-palm concession",
 
-    "hero.title":
-      "Forest Fires:<br>Intentional or Not?",
+    "analysis.title":"Spatial Analysis",
+    "stats.palmVillage":"Villages overlapping palm",
+    "stats.fireVillage":"Villages with fire",
+    "stats.firePalm":"Concessions with fire",
+    "stats.totalFire":"Total fire detections",
+    "stats.anthroShare":"Anthropogenic Fire share",
 
-    "hero.desc":
-      "Explore the spatial pattern of active fire detections in West Kalimantan and their relationship with villages and oil-palm concessions. Fire detections are grouped by spatial density and proximity on the acquisition date.",
+    "analysis.note":"Fire classes are density-based screening results, not legal findings or verified causal attribution.",
 
-    "hero.button":
-      "View Map",
+    "basemap.title":"Basemap",
+    "basemap.note":"Light uses OpenStreetMap Standard. Satellite uses ArcGIS World Imagery.",
 
-    "map.title":
-      "West Kalimantan Fire Patterns",
+    "hover.title":"Fire Temporal Analysis",
+    "hover.empty":"Use the date range to filter fire detections.",
 
-    "map.subtitle":
-      "Fire detections, village boundaries, and oil-palm concessions.",
+    "timeseries.selected":"Detections in period",
+    "timeseries.anthro":"Anthropogenic",
+    "timeseries.natural":"Natural",
+    "timeseries.noData":"No detections in this period.",
 
-    "map.reset":
-      "Reset Map",
+    "method.title":"How are fire patterns classified?",
+    "method.intro":"This approach uses unsupervised density-based clustering. Fire detections forming dense groups on the observation date receive the operational label Anthropogenic Fire, while DBSCAN noise receives Natural Fire. The label is a spatial-pattern proxy, not causal evidence.",
 
-    "legend.natural":
-      "Natural Hotspot",
+    "cards.c1.t":"Input & Quality",
+    "cards.c1.p":"Combines SNPP and Aqua MODIS detections already clipped to the West Kalimantan 2026 village-boundary AOI.",
 
-    "legend.anthro":
-      "Anthropogenic Hotspot",
+    "cards.c2.t":"Spatial Neighbourhood",
+    "cards.c2.p":"For each detection, the number of detections within 5 km on the same acquisition date is calculated.",
 
-    "legend.village":
-      "Village boundary",
+    "cards.c3.t":"DBSCAN",
+    "cards.c3.p":"DBSCAN forms density-based clusters, handles irregular cluster shapes, and identifies noise.",
 
-    "legend.palm":
-      "Oil-palm concession",
+    "cards.c4.t":"Operational Class",
+    "cards.c4.p":"Cluster members are labelled Anthropogenic Fire; DBSCAN noise is labelled Natural Fire as a sparsity proxy.",
 
-    "legend.order":
-      "Order: Villages → Palm concessions → Natural hotspot → Anthropogenic hotspot",
+    "cards.c5.t":"Interpretation",
+    "cards.c5.p":"Density, cluster size, neighbour count, FRP, brightness and confidence are exposed for pattern interpretation.",
 
-    "analysis.title":
-      "Spatial Analysis",
+    "cards.c6.t":"Limitation",
+    "cards.c6.p":"Density alone cannot prove cause. Causal attribution requires additional land-use, meteorological, topographic and human-activity evidence.",
 
-    "stats.palmVillage":
-      "Villages overlapping palm",
+    "refs.title":"Methodological references",
+    "refs.c4":"NASA FIRMS describes FRP as a proxy for fire intensity and notes that sensor characteristics affect FRP comparability.",
 
-    "stats.fireVillage":
-      "Villages with fire",
-
-    "stats.firePalm":
-      "Concessions with fire",
-
-    "stats.totalFire":
-      "Total fire detections",
-
-    "stats.anthroShare":
-      "Anthropogenic Fire share",
-
-    "analysis.note":
-      "Fire classes are density-based screening results, not legal findings or verified causal attribution.",
-
-    "basemap.title":
-      "Basemap",
-
-    "basemap.note":
-      "Light uses OpenStreetMap Standard. Satellite uses ArcGIS World Imagery.",
-
-    "hover.title":
-      "Fire Detection Detail",
-
-    "hover.empty":
-      "Hover over a fire detection on the map.",
-
-    "method.title":
-      "How are fire patterns classified?",
-
-    "method.intro":
-      "This approach uses unsupervised density-based clustering. Fire detections forming dense groups on the observation date receive the operational label Anthropogenic Fire, while DBSCAN noise receives Natural Fire. The label is a spatial-pattern proxy, not causal evidence.",
-
-    "cards.c1.t":
-      "Input & Quality",
-
-    "cards.c1.p":
-      "Combines SNPP and Aqua MODIS detections already clipped to the West Kalimantan 2026 village-boundary AOI.",
-
-    "cards.c2.t":
-      "Spatial Neighbourhood",
-
-    "cards.c2.p":
-      "For each detection, the number of detections within 5 km on the same acquisition date is calculated.",
-
-    "cards.c3.t":
-      "DBSCAN",
-
-    "cards.c3.p":
-      "DBSCAN forms density-based clusters, handles irregular cluster shapes, and identifies noise.",
-
-    "cards.c4.t":
-      "Operational Class",
-
-    "cards.c4.p":
-      "Cluster members are labelled Anthropogenic Fire; DBSCAN noise is labelled Natural Fire as a sparsity proxy.",
-
-    "cards.c5.t":
-      "Interpretation",
-
-    "cards.c5.p":
-      "Density, cluster size, neighbour count, FRP, brightness and confidence are exposed for pattern interpretation.",
-
-    "cards.c6.t":
-      "Limitation",
-
-    "cards.c6.p":
-      "Density alone cannot prove cause. Causal attribution requires additional land-use, meteorological, topographic and human-activity evidence.",
-
-    "refs.title":
-      "Methodological references",
-
-    "refs.c4":
-      "NASA FIRMS describes FRP as a proxy for fire intensity and notes that sensor characteristics affect FRP comparability.",
-
-    "footer":
-      "West Kalimantan Fire Pattern Screening BINUS University",
-
-    "providers":
-      "Data providers: Greenpeace; VIIRS on Suomi NPP (SNPP); MODIS on Aqua."
-
+    "footer":"West Kalimantan Fire Pattern Screening BINUS University",
+    "providers":"Data providers: Greenpeace; VIIRS on Suomi NPP (SNPP); MODIS on Aqua."
   }
-
 };
 
 
 let lang="id";
 
 let map;
-
 let lightMap;
 let satellite;
 
 let naturalFireLayer;
 let anthropogenicFireLayer;
-
 let villagesLayer;
 let palmLayer;
 
 let fireData;
 let villageData;
 let palmData;
+
+
+/* =========================================================
+   TEMPORAL FILTER STATE
+   ========================================================= */
+
+let fireDates=[];
+let startDateIndex=0;
+let endDateIndex=0;
+let filterUpdateFrame=null;
 
 
 /* =========================================================
@@ -313,13 +191,10 @@ function applyLanguage(){
       I18N[lang] &&
       I18N[lang][key]!==undefined
     ){
-
       el.innerHTML=I18N[lang][key];
-
     }
 
   });
-
 
   document.querySelectorAll(
     "[data-lang]"
@@ -332,6 +207,7 @@ function applyLanguage(){
 
   });
 
+  updateDateFilterUI();
 }
 
 
@@ -342,11 +218,8 @@ document.querySelectorAll(
   button.addEventListener(
     "click",
     ()=>{
-
       lang=button.dataset.lang;
-
       applyLanguage();
-
     }
   );
 
@@ -366,23 +239,7 @@ map=L.map(
 );
 
 
-/*
-  Explicit layer stacking:
-
-  410 = Villages
-  420 = Palm concessions
-  430 = Natural fire
-  440 = Anthropogenic fire
-
-  Therefore:
-
-  bottom
-  village
-  palm
-  natural
-  anthropogenic
-  top
-*/
+/* Layer panes */
 
 map.createPane(
   "villagePane"
@@ -424,45 +281,27 @@ map.getPane(
    BASEMAPS
    ========================================================= */
 
-/*
-  OpenStreetMap Standard
-
-  No CARTO API key required.
-*/
-
 lightMap=L.tileLayer(
 
   "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
 
   {
-
     attribution:
       "© OpenStreetMap contributors",
-
     maxZoom:19
-
   }
 
 ).addTo(map);
 
-
-/*
-  ArcGIS World Imagery
-
-  Public tile endpoint.
-*/
 
 satellite=L.tileLayer(
 
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
 
   {
-
     attribution:
       "Sources: Esri, Maxar, Earthstar Geographics, and the GIS User Community",
-
     maxZoom:18
-
   }
 
 );
@@ -482,7 +321,6 @@ const mapSection=
     "map-section"
   );
 
-
 if(
   window.ResizeObserver &&
   mapSection
@@ -494,9 +332,7 @@ if(
         pan:false
       });
     }
-  ).observe(
-    mapSection
-  );
+  ).observe(mapSection);
 
 }
 
@@ -507,10 +343,8 @@ if(
 
 Promise.all([
 
-  fetch(
-    DATA.fires
-  ).then(
-    response=>{
+  fetch(DATA.fires)
+    .then(response=>{
 
       if(!response.ok){
         throw new Error(
@@ -520,13 +354,10 @@ Promise.all([
 
       return response.json();
 
-    }
-  ),
+    }),
 
-  fetch(
-    DATA.villages
-  ).then(
-    response=>{
+  fetch(DATA.villages)
+    .then(response=>{
 
       if(!response.ok){
         throw new Error(
@@ -536,13 +367,10 @@ Promise.all([
 
       return response.json();
 
-    }
-  ),
+    }),
 
-  fetch(
-    DATA.palm
-  ).then(
-    response=>{
+  fetch(DATA.palm)
+    .then(response=>{
 
       if(!response.ok){
         throw new Error(
@@ -552,113 +380,84 @@ Promise.all([
 
       return response.json();
 
-    }
-  )
+    })
 
 ])
 
+.then(([fires,villages,palm])=>{
 
-.then(
-  ([fires,villages,palm])=>{
+  fireData=fires;
+  villageData=villages;
+  palmData=palm;
 
-    fireData=fires;
+  initializeDateFilter();
 
-    villageData=villages;
+  renderLayers();
 
-    palmData=palm;
+  calculateProvinceStats();
 
-
-    renderLayers();
-
-    calculateProvinceStats();
-
-
-    /*
-      Overlay order in control:
-
-      Anthropogenic
-      Natural
-      Palm
-      Villages
-    */
-
-    L.control.layers(
-
-      {
-
-        "Light":lightMap,
-
-        "Satellite":satellite
-
-      },
-
-      {
-
-        "Anthropogenic hotspot":
-          anthropogenicFireLayer,
-
-        "Natural hotspot":
-          naturalFireLayer,
-
-        "Oil-palm concessions":
-          palmLayer,
-
-        "Villages":
-          villagesLayer
-
-      },
-
-      {
-
-        collapsed:false
-
-      }
-
-    ).addTo(map);
+  updateDateFilterUI();
 
 
-    /*
-      Initial view = entire village AOI
-    */
+  L.control.layers(
 
-    const villageBounds=
-      L.geoJSON(
-        villageData
-      ).getBounds();
+    {
+      "Light":lightMap,
+      "Satellite":satellite
+    },
 
+    {
+      "Anthropogenic hotspot":
+        anthropogenicFireLayer,
 
-    if(
-      villageBounds.isValid()
-    ){
+      "Natural hotspot":
+        naturalFireLayer,
 
-      map.fitBounds(
-        villageBounds,
-        {
-          padding:[15,15]
-        }
-      );
+      "Oil-palm concessions":
+        palmLayer,
 
+      "Villages":
+        villagesLayer
+    },
+
+    {
+      collapsed:false
     }
 
-  }
-)
+  ).addTo(map);
 
 
-.catch(
-  error=>{
+  const villageBounds=
+    L.geoJSON(
+      villageData
+    ).getBounds();
 
-    console.error(
-      "KALBAR FIRE DATA ERROR:",
-      error
+
+  if(villageBounds.isValid()){
+
+    map.fitBounds(
+      villageBounds,
+      {
+        padding:[15,15]
+      }
     );
 
-
-    alert(
-      "Data gagal dimuat. Periksa folder data dan nama file GeoJSON."
-    );
-
   }
-);
+
+})
+
+.catch(error=>{
+
+  console.error(
+    "KALBAR FIRE DATA ERROR:",
+    error
+  );
+
+  alert(
+    "Data gagal dimuat. Periksa folder data dan nama file GeoJSON."
+  );
+
+});
 
 
 /* =========================================================
@@ -669,7 +468,6 @@ function villageName(feature){
 
   const properties=
     feature.properties || {};
-
 
   return (
     properties.NAMOBJ ||
@@ -684,7 +482,6 @@ function palmName(feature){
 
   const properties=
     feature.properties || {};
-
 
   return (
     properties.company_name ||
@@ -704,48 +501,548 @@ function fmt(
     value===undefined ||
     value===""
   ){
-
     return "—";
-
   }
 
-
-  if(
-    typeof value==="number"
-  ){
+  if(typeof value==="number"){
 
     return value.toLocaleString(
-
       lang==="id"
         ? "id-ID"
         : "en-US",
-
       {
-        maximumFractionDigits:
-          decimals
+        maximumFractionDigits:decimals
       }
-
     );
 
   }
 
-
   return value;
+}
+
+
+/* =========================================================
+   FIRE DATE FUNCTIONS
+   ========================================================= */
+
+function getFireDate(feature){
+
+  const properties=
+    feature.properties || {};
+
+  return properties.acq_date || null;
+
+}
+
+
+function formatDate(dateString){
+
+  if(!dateString){
+    return "—";
+  }
+
+  const parts=
+    dateString.split("-");
+
+  if(parts.length!==3){
+    return dateString;
+  }
+
+  if(lang==="id"){
+    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+  }
+
+  return `${parts[1]}/${parts[2]}/${parts[0]}`;
+}
+
+
+function getFilteredFireFeatures(){
+
+  if(
+    !fireData ||
+    !fireData.features ||
+    !fireDates.length
+  ){
+    return [];
+  }
+
+  const startDate=
+    fireDates[startDateIndex];
+
+  const endDate=
+    fireDates[endDateIndex];
+
+  return fireData.features.filter(
+    feature=>{
+
+      const date=
+        getFireDate(feature);
+
+      return (
+        date &&
+        date>=startDate &&
+        date<=endDate
+      );
+
+    }
+  );
+
+}
+/* =========================================================
+   DATE RANGE INITIALIZATION
+   ========================================================= */
+
+function initializeDateFilter(){
+
+  if(
+    !fireData ||
+    !fireData.features
+  ){
+    return;
+  }
+
+
+  fireDates=[
+    ...new Set(
+
+      fireData.features
+        .map(feature=>
+          getFireDate(feature)
+        )
+        .filter(Boolean)
+
+    )
+  ].sort();
+
+
+  if(!fireDates.length){
+    return;
+  }
+
+
+  startDateIndex=0;
+  endDateIndex=
+    fireDates.length-1;
+
+
+  const startSlider=
+    document.getElementById(
+      "startDateSlider"
+    );
+
+  const endSlider=
+    document.getElementById(
+      "endDateSlider"
+    );
+
+
+  if(
+    !startSlider ||
+    !endSlider
+  ){
+    return;
+  }
+
+
+  startSlider.min=0;
+  startSlider.max=
+    fireDates.length-1;
+
+  startSlider.value=
+    startDateIndex;
+
+
+  endSlider.min=0;
+  endSlider.max=
+    fireDates.length-1;
+
+  endSlider.value=
+    endDateIndex;
+
+
+  startSlider.addEventListener(
+    "input",
+    ()=>{
+
+      let value=
+        Number(
+          startSlider.value
+        );
+
+
+      if(
+        value>endDateIndex
+      ){
+
+        value=
+          endDateIndex;
+
+        startSlider.value=
+          value;
+
+      }
+
+
+      startDateIndex=
+        value;
+
+      scheduleFireQuery();
+
+    }
+  );
+
+
+  endSlider.addEventListener(
+    "input",
+    ()=>{
+
+      let value=
+        Number(
+          endSlider.value
+        );
+
+
+      if(
+        value<startDateIndex
+      ){
+
+        value=
+          startDateIndex;
+
+        endSlider.value=
+          value;
+
+      }
+
+
+      endDateIndex=
+        value;
+
+      scheduleFireQuery();
+
+    }
+  );
+
+
+  updateDateFilterUI();
 
 }
 
 
 /* =========================================================
-   FIRE LAYER
+   DEBOUNCE SLIDER
+   ========================================================= */
+
+function scheduleFireQuery(){
+
+  if(filterUpdateFrame){
+
+    cancelAnimationFrame(
+      filterUpdateFrame
+    );
+
+  }
+
+
+  filterUpdateFrame=
+    requestAnimationFrame(
+      ()=>{
+
+        filterUpdateFrame=null;
+
+        updateFireQuery();
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   EXECUTE TEMPORAL QUERY
+   ========================================================= */
+
+function updateFireQuery(){
+
+  if(
+    !fireData ||
+    !fireDates.length
+  ){
+    return;
+  }
+
+
+  updateFireLayers();
+
+  updateDateFilterUI();
+
+}
+
+
+/* =========================================================
+   UPDATE FIRE MAP LAYERS
+   ========================================================= */
+
+function updateFireLayers(){
+
+  if(!fireData){
+    return;
+  }
+
+
+  /*
+    Preserve current visibility.
+    If the user turned a layer off,
+    slider movement will not turn it back on.
+  */
+
+  const naturalVisible=
+    naturalFireLayer
+      ? map.hasLayer(naturalFireLayer)
+      : true;
+
+
+  const anthropogenicVisible=
+    anthropogenicFireLayer
+      ? map.hasLayer(
+          anthropogenicFireLayer
+        )
+      : true;
+
+
+  if(naturalFireLayer){
+
+    map.removeLayer(
+      naturalFireLayer
+    );
+
+  }
+
+
+  if(anthropogenicFireLayer){
+
+    map.removeLayer(
+      anthropogenicFireLayer
+    );
+
+  }
+
+
+  const filteredFeatures=
+    getFilteredFireFeatures();
+
+
+  const naturalFeatures={
+
+    type:"FeatureCollection",
+
+    features:
+      filteredFeatures.filter(
+        feature=>{
+
+          const p=
+            feature.properties || {};
+
+          return (
+            p.fire_class===
+            "Natural Fire"
+          );
+
+        }
+      )
+
+  };
+
+
+  const anthropogenicFeatures={
+
+    type:"FeatureCollection",
+
+    features:
+      filteredFeatures.filter(
+        feature=>{
+
+          const p=
+            feature.properties || {};
+
+          return (
+            p.fire_class===
+            "Anthropogenic Fire"
+          );
+
+        }
+      )
+
+  };
+
+
+  naturalFireLayer=
+    createNaturalFireLayer(
+      naturalFeatures
+    );
+
+
+  anthropogenicFireLayer=
+    createAnthropogenicFireLayer(
+      anthropogenicFeatures
+    );
+
+
+  if(naturalVisible){
+
+    naturalFireLayer.addTo(
+      map
+    );
+
+  }
+
+
+  if(anthropogenicVisible){
+
+    anthropogenicFireLayer.addTo(
+      map
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   NATURAL FIRE LAYER
+   ========================================================= */
+
+function createNaturalFireLayer(
+  naturalFeatures
+){
+
+  return L.geoJSON(
+
+    naturalFeatures,
+
+    {
+
+      pane:"naturalFirePane",
+
+      pointToLayer:
+        (feature,latlng)=>{
+
+          return L.circleMarker(
+
+            latlng,
+
+            {
+              radius:4,
+              weight:1,
+              color:"#ffffff",
+              fillColor:"#e9b949",
+              fillOpacity:0.88
+            }
+
+          );
+
+        },
+
+      onEachFeature:
+        (feature,layer)=>{
+
+          /*
+            Natural Fire:
+            no information panel on hover.
+          */
+
+        }
+
+    }
+
+  );
+
+}
+
+
+/* =========================================================
+   ANTHROPOGENIC FIRE LAYER
+   ========================================================= */
+
+function createAnthropogenicFireLayer(
+  anthropogenicFeatures
+){
+
+  return L.geoJSON(
+
+    anthropogenicFeatures,
+
+    {
+
+      pane:
+        "anthropogenicFirePane",
+
+      pointToLayer:
+        (feature,latlng)=>{
+
+          return L.circleMarker(
+
+            latlng,
+
+            {
+              radius:4.2,
+              weight:1,
+              color:"#ffffff",
+              fillColor:"#d64a2b",
+              fillOpacity:0.92
+            }
+
+          );
+
+        },
+
+
+      onEachFeature:
+        (feature,layer)=>{
+
+          const properties=
+            feature.properties || {};
+
+          const date=
+            properties.acq_date ||
+            "—";
+
+
+          /*
+            IMPORTANT:
+            Anthropogenic hotspot hover
+            displays DATE ONLY.
+          */
+
+          layer.bindTooltip(
+
+            date,
+
+            {
+              sticky:true,
+              direction:"top"
+            }
+
+          );
+
+        }
+
+    }
+
+  );
+
+}
+
+
+/* =========================================================
+   INITIAL MAP LAYERS
    ========================================================= */
 
 function renderLayers(){
 
-  /*
-    -------------------------------------------------------
-    1. VILLAGE BOUNDARIES
-    -------------------------------------------------------
-  */
+  /* -------------------------------------------------------
+     1. VILLAGES
+     ------------------------------------------------------- */
 
   villagesLayer=
     L.geoJSON(
@@ -759,31 +1056,22 @@ function renderLayers(){
         style:{
 
           color:"#707b74",
-
           weight:0.45,
-
           fillColor:"#b9c1bb",
-
           fillOpacity:0.035
 
         },
-
 
         onEachFeature:
           (feature,layer)=>{
 
             layer.bindTooltip(
 
-              villageName(
-                feature
-              ),
+              villageName(feature),
 
               {
-
                 sticky:true,
-
                 direction:"top"
-
               }
 
             );
@@ -793,80 +1081,94 @@ function renderLayers(){
       }
 
     ).addTo(map);
- /* =========================================================
-   2. OIL PALM CONCESSIONS
-   ========================================================= */
 
-palmLayer=
-  L.geoJSON(
 
-    palmData,
+  /* -------------------------------------------------------
+     2. PALM OIL CONCESSIONS
+     ------------------------------------------------------- */
 
-    {
+  palmLayer=
+    L.geoJSON(
 
-      pane:"palmPane",
+      palmData,
 
-      style:{
+      {
 
-        color:"#47723f",
+        pane:"palmPane",
 
-        weight:0.65,
+        style:{
 
-        fillColor:"#6c9a5c",
+          color:"#47723f",
+          weight:0.65,
+          fillColor:"#6c9a5c",
+          fillOpacity:0.16
 
-        fillOpacity:0.16
+        },
 
-      },
+        onEachFeature:
+          (feature,layer)=>{
 
-      onEachFeature:(f,l)=>{
+            const p=
+              feature.properties || {};
 
-        const p=f.properties || {};
 
-        const commodity =
-          p.commodity ?? "—";
+            const commodity=
+              p.commodity ??
+              "—";
 
-        const hectares =
-          p.HECTARES !== undefined &&
-          p.HECTARES !== null &&
-          p.HECTARES !== ""
-            ? fmt(Number(p.HECTARES),2)
-            : "—";
-      
-        l.bindTooltip(
 
-          `<strong>Commodity:</strong> ${commodity}<br>
-           <strong>Hectares:</strong> ${hectares}<br>`,
+            const hectares=
 
-          {
+              p.HECTARES !== undefined &&
+              p.HECTARES !== null &&
+              p.HECTARES !== ""
 
-            sticky:true,
+                ? fmt(
+                    Number(
+                      p.HECTARES
+                    ),
+                    2
+                  )
 
-            direction:"top"
+                : "—";
+
+
+            /*
+              Palm hover:
+              Commodity
+              Hectares
+              Source
+            */
+
+            layer.bindTooltip(
+
+              `<strong>Commodity:</strong> ${commodity}<br>
+               <strong>Hectares:</strong> ${hectares}<br>`,
+
+              {
+                sticky:true,
+                direction:"top"
+              }
+
+            );
 
           }
 
-        );
-
       }
 
-    }
+    ).addTo(map);
 
-  ).addTo(map);
 
-  /*
-    -------------------------------------------------------
-    3. NATURAL FIRE
-    -------------------------------------------------------
-  */
+  /* -------------------------------------------------------
+     3. NATURAL FIRE
+     ------------------------------------------------------- */
 
   const naturalFeatures={
 
     type:"FeatureCollection",
 
     features:
-
-      fireData.features.filter(
-
+      getFilteredFireFeatures().filter(
         feature=>{
 
           const p=
@@ -878,99 +1180,32 @@ palmLayer=
           );
 
         }
-
       )
 
   };
 
 
   naturalFireLayer=
-    L.geoJSON(
-
-      naturalFeatures,
-
-      {
-
-        pane:"naturalFirePane",
+    createNaturalFireLayer(
+      naturalFeatures
+    );
 
 
-        pointToLayer:
-          (feature,latlng)=>{
-
-            return L.circleMarker(
-
-              latlng,
-
-              {
-
-                radius:4,
-
-                weight:1,
-
-                color:"#ffffff",
-
-                fillColor:"#e9b949",
-
-                fillOpacity:0.88
-
-              }
-
-            );
-
-          },
+  naturalFireLayer.addTo(
+    map
+  );
 
 
-        onEachFeature:
-          (feature,layer)=>{
-
-            layer.on(
-
-              "mouseover",
-
-              ()=>{
-
-                showFireInfo(
-                  feature.properties || {}
-                );
-
-              }
-
-            );
-
-
-            layer.on(
-
-              "mouseout",
-
-              ()=>{
-
-                resetFireInfo();
-
-              }
-
-            );
-
-          }
-
-      }
-
-    ).addTo(map);
-
-
-  /*
-    -------------------------------------------------------
-    4. ANTHROPOGENIC FIRE
-    -------------------------------------------------------
-  */
+  /* -------------------------------------------------------
+     4. ANTHROPOGENIC FIRE
+     ------------------------------------------------------- */
 
   const anthropogenicFeatures={
 
     type:"FeatureCollection",
 
     features:
-
-      fireData.features.filter(
-
+      getFilteredFireFeatures().filter(
         feature=>{
 
           const p=
@@ -982,175 +1217,349 @@ palmLayer=
           );
 
         }
-
       )
 
   };
 
 
   anthropogenicFireLayer=
-    L.geoJSON(
-
-      anthropogenicFeatures,
-
-      {
-
-        pane:
-          "anthropogenicFirePane",
+    createAnthropogenicFireLayer(
+      anthropogenicFeatures
+    );
 
 
-        pointToLayer:
-          (feature,latlng)=>{
-
-            return L.circleMarker(
-
-              latlng,
-
-              {
-
-                radius:4.2,
-
-                weight:1,
-
-                color:"#ffffff",
-
-                fillColor:"#d64a2b",
-
-                fillOpacity:0.92
-
-              }
-
-            );
-
-          },
-
-
-        onEachFeature:
-          (feature,layer)=>{
-
-            layer.on(
-
-              "mouseover",
-
-              ()=>{
-
-                showFireInfo(
-                  feature.properties || {}
-                );
-
-              }
-
-            );
-
-
-            layer.on(
-
-              "mouseout",
-
-              ()=>{
-
-                resetFireInfo();
-
-              }
-
-            );
-
-          }
-
-      }
-
-    ).addTo(map);
+  anthropogenicFireLayer.addTo(
+    map
+  );
 
 }
 
 
 /* =========================================================
-   FIRE INFORMATION PANEL
+   TEMPORAL UI
    ========================================================= */
 
-function resetFireInfo(){
+function updateDateFilterUI(){
 
-  const element=
-    document.getElementById(
-      "fireInfo"
-    );
-
-
-  if(element){
-
-    element.innerHTML=
-      I18N[lang]["hover.empty"];
-
-  }
-
-}
-
-
-function showFireInfo(properties){
-
-  const isAnthropogenic=
-    properties.fire_class===
-    "Anthropogenic Fire";
-
-
-  const color=
-    isAnthropogenic
-      ? "#b94127"
-      : "#9a741d";
-
-
-  const element=
-    document.getElementById(
-      "fireInfo"
-    );
-
-
-  if(!element){
+  if(!fireDates.length){
     return;
   }
 
 
-  element.innerHTML=
+  const startLabel=
+    document.getElementById(
+      "startDateLabel"
+    );
 
-    `<strong style="color:${color}">
-      ${properties.fire_class || "Fire detection"}
-    </strong><br>
+  const endLabel=
+    document.getElementById(
+      "endDateLabel"
+    );
 
-    Lat/Lon:
-      ${fmt(properties.lat,5)},
-      ${fmt(properties.lon,5)}<br>
+  const countElement=
+    document.getElementById(
+      "filteredFireCount"
+    );
 
-    Date/Time:
-      ${properties.acq_date || "—"}
-      ${properties.acq_time || "—"}<br>
 
-    Satellite:
-      ${properties.source ||
-        properties.satellite ||
-        "—"}<br>
+  if(startLabel){
 
-    Brightness:
-      ${fmt(properties.brightness,1)} K<br>
+    startLabel.textContent=
+      formatDate(
+        fireDates[
+          startDateIndex
+        ]
+      );
 
-    FRP:
-      ${fmt(properties.frp,1)} MW<br>
+  }
 
-    Confidence:
-      ${properties.confidence ?? "—"}<br>
 
-    5 km neighbours:
-      ${fmt(properties.neighbors_5km,0)}<br>
+  if(endLabel){
 
-    Cluster size:
-      ${fmt(properties.cluster_size,0)}<br>
+    endLabel.textContent=
+      formatDate(
+        fireDates[
+          endDateIndex
+        ]
+      );
 
-    5 km density:
-      ${fmt(properties.density_5km_points_km2,2)}
-      points/km²`;
+  }
+
+
+  const filteredFeatures=
+    getFilteredFireFeatures();
+
+
+  if(countElement){
+
+    countElement.textContent=
+      fmt(
+        filteredFeatures.length,
+        0
+      );
+
+  }
+
+
+  renderFireTimeSeries(
+    filteredFeatures
+  );
 
 }
 
 
+/* =========================================================
+   TIME SERIES
+   ========================================================= */
+
+function renderFireTimeSeries(
+  features
+){
+
+  const container=
+    document.getElementById(
+      "fireTimeSeries"
+    );
+
+
+  if(!container){
+    return;
+  }
+
+
+  if(!features.length){
+
+    container.innerHTML=
+
+      `<div class="timeseries-empty">
+        ${I18N[lang]["timeseries.noData"]}
+      </div>`;
+
+    return;
+
+  }
+
+
+  const daily={};
+
+
+  features.forEach(
+    feature=>{
+
+      const p=
+        feature.properties || {};
+
+      const date=
+        p.acq_date;
+
+
+      if(!date){
+        return;
+      }
+
+
+      if(!daily[date]){
+
+        daily[date]={
+
+          total:0,
+          anthropogenic:0,
+          natural:0
+
+        };
+
+      }
+
+
+      daily[date].total++;
+
+
+      if(
+        p.fire_class===
+        "Anthropogenic Fire"
+      ){
+
+        daily[date].anthropogenic++;
+
+      }
+      else if(
+        p.fire_class===
+        "Natural Fire"
+      ){
+
+        daily[date].natural++;
+
+      }
+
+    }
+  );
+
+
+  const dates=
+    Object.keys(
+      daily
+    ).sort();
+
+
+  if(!dates.length){
+
+    container.innerHTML=
+
+      `<div class="timeseries-empty">
+        ${I18N[lang]["timeseries.noData"]}
+      </div>`;
+
+    return;
+
+  }
+
+
+  const maxTotal=
+    Math.max(
+      ...dates.map(
+        date=>
+          daily[date].total
+      )
+    );
+
+
+  container.innerHTML="";
+
+
+  dates.forEach(
+    date=>{
+
+      const d=
+        daily[date];
+
+
+      const row=
+        document.createElement(
+          "div"
+        );
+
+      row.className=
+        "timeseries-row";
+
+
+      const label=
+        document.createElement(
+          "span"
+        );
+
+      label.className=
+        "timeseries-date";
+
+      label.textContent=
+        formatDate(date);
+
+
+      const track=
+        document.createElement(
+          "div"
+        );
+
+      track.className=
+        "timeseries-track";
+
+
+      const bar=
+        document.createElement(
+          "div"
+        );
+
+      bar.className=
+        "timeseries-bar";
+
+
+      const width=
+        maxTotal>0
+
+          ? (
+              d.total /
+              maxTotal
+            )*100
+
+          : 0;
+
+
+      bar.style.width=
+        `${width}%`;
+
+
+      const anthro=
+        document.createElement(
+          "span"
+        );
+
+      anthro.className=
+        "timeseries-anthro";
+
+
+      const anthroWidth=
+        d.total>0
+
+          ? (
+              d.anthropogenic /
+              d.total
+            )*100
+
+          : 0;
+
+
+      anthro.style.width=
+        `${anthroWidth}%`;
+
+
+      bar.appendChild(
+        anthro
+      );
+
+      track.appendChild(
+        bar
+      );
+
+
+      const value=
+        document.createElement(
+          "span"
+        );
+
+      value.className=
+        "timeseries-value";
+
+      value.textContent=
+        fmt(
+          d.total,
+          0
+        );
+
+
+      row.appendChild(
+        label
+      );
+
+      row.appendChild(
+        track
+      );
+
+      row.appendChild(
+        value
+      );
+
+
+      row.title=
+        `${formatDate(date)} — ${d.total} detections`;
+
+
+      container.appendChild(
+        row
+      );
+
+    }
+  );
+
+}
 /* =========================================================
    SPATIAL ANALYSIS
    ========================================================= */
@@ -1158,11 +1567,7 @@ function showFireInfo(properties){
 function calculateProvinceStats(){
 
   /*
-    Polygon-point overlay calculations were precomputed
-    so that the static GitHub Pages application remains
-    responsive.
-
-    Current values from the prepared dataset:
+    Precomputed spatial statistics.
 
     Villages                         2,132
     Villages overlapping palm       1,527
@@ -1172,7 +1577,6 @@ function calculateProvinceStats(){
     Anthropogenic Fire               3,343
     Natural Fire                     1,523
   */
-
 
   const STATS={
 
@@ -1196,20 +1600,20 @@ function calculateProvinceStats(){
   const palmVillagePercent=
 
     100 *
-
     STATS.villagesOverlappingPalm /
-
     STATS.villages;
 
 
   const anthropogenicShare=
 
     100 *
-
     STATS.anthropogenicFire /
-
     STATS.fireDetections;
 
+
+  /* -------------------------------------------------------
+     Villages overlapping palm
+     ------------------------------------------------------- */
 
   const palmVillageElement=
     document.getElementById(
@@ -1220,6 +1624,7 @@ function calculateProvinceStats(){
   if(palmVillageElement){
 
     palmVillageElement.textContent=
+
       fmt(
         palmVillagePercent,
         1
@@ -1227,6 +1632,10 @@ function calculateProvinceStats(){
 
   }
 
+
+  /* -------------------------------------------------------
+     Villages with fire
+     ------------------------------------------------------- */
 
   const fireVillageElement=
     document.getElementById(
@@ -1237,6 +1646,7 @@ function calculateProvinceStats(){
   if(fireVillageElement){
 
     fireVillageElement.textContent=
+
       fmt(
         STATS.villagesWithFire,
         0
@@ -1244,6 +1654,10 @@ function calculateProvinceStats(){
 
   }
 
+
+  /* -------------------------------------------------------
+     Palm concessions with fire
+     ------------------------------------------------------- */
 
   const firePalmElement=
     document.getElementById(
@@ -1254,6 +1668,7 @@ function calculateProvinceStats(){
   if(firePalmElement){
 
     firePalmElement.textContent=
+
       fmt(
         STATS.palmConcessionsWithFire,
         0
@@ -1261,6 +1676,10 @@ function calculateProvinceStats(){
 
   }
 
+
+  /* -------------------------------------------------------
+     Total fire
+     ------------------------------------------------------- */
 
   const totalFireElement=
     document.getElementById(
@@ -1271,6 +1690,7 @@ function calculateProvinceStats(){
   if(totalFireElement){
 
     totalFireElement.textContent=
+
       fmt(
         STATS.fireDetections,
         0
@@ -1278,6 +1698,10 @@ function calculateProvinceStats(){
 
   }
 
+
+  /* -------------------------------------------------------
+     Anthropogenic share
+     ------------------------------------------------------- */
 
   const anthroShareElement=
     document.getElementById(
@@ -1288,6 +1712,7 @@ function calculateProvinceStats(){
   if(anthroShareElement){
 
     anthroShareElement.textContent=
+
       fmt(
         anthropogenicShare,
         1
@@ -1339,7 +1764,9 @@ if(visitMapButton){
         ()=>{
 
           map.invalidateSize({
+
             pan:false
+
           });
 
         },
@@ -1356,7 +1783,7 @@ if(visitMapButton){
 
 
 /* =========================================================
-   RESET MAP
+   RESET MAP + RESET TEMPORAL FILTER
    ========================================================= */
 
 const resetMapButton=
@@ -1373,9 +1800,11 @@ if(resetMapButton){
 
     ()=>{
 
-      if(
-        villageData
-      ){
+      /* -----------------------------------------------
+         Reset spatial extent
+         ----------------------------------------------- */
+
+      if(villageData){
 
         const bounds=
           L.geoJSON(
@@ -1383,9 +1812,7 @@ if(resetMapButton){
           ).getBounds();
 
 
-        if(
-          bounds.isValid()
-        ){
+        if(bounds.isValid()){
 
           map.fitBounds(
 
@@ -1397,16 +1824,67 @@ if(resetMapButton){
 
           );
 
-          return;
+        }
+        else{
+
+          map.fitBounds(
+            KALBAR_VIEW
+          );
 
         }
 
       }
+      else{
+
+        map.fitBounds(
+          KALBAR_VIEW
+        );
+
+      }
 
 
-      map.fitBounds(
-        KALBAR_VIEW
-      );
+      /* -----------------------------------------------
+         Reset date range
+         ----------------------------------------------- */
+
+      if(fireDates.length){
+
+        startDateIndex=0;
+
+        endDateIndex=
+          fireDates.length-1;
+
+
+        const startSlider=
+          document.getElementById(
+            "startDateSlider"
+          );
+
+        const endSlider=
+          document.getElementById(
+            "endDateSlider"
+          );
+
+
+        if(startSlider){
+
+          startSlider.value=
+            startDateIndex;
+
+        }
+
+
+        if(endSlider){
+
+          endSlider.value=
+            endDateIndex;
+
+        }
+
+
+        updateFireQuery();
+
+      }
 
     }
 
@@ -1436,9 +1914,7 @@ document.querySelectorAll(
           "satellite";
 
 
-        if(
-          isSatellite
-        ){
+        if(isSatellite){
 
           map.addLayer(
             satellite
@@ -1449,7 +1925,6 @@ document.querySelectorAll(
           );
 
         }
-
         else{
 
           map.addLayer(
@@ -1466,6 +1941,7 @@ document.querySelectorAll(
         document.querySelectorAll(
           "[data-basemap]"
         ).forEach(
+
           otherButton=>{
 
             otherButton.classList.remove(
@@ -1473,6 +1949,7 @@ document.querySelectorAll(
             );
 
           }
+
         );
 
 
@@ -1510,9 +1987,11 @@ document.querySelectorAll(
 
         const target=
           document.querySelector(
+
             link.getAttribute(
               "href"
             )
+
           );
 
 
@@ -1550,7 +2029,7 @@ document.querySelectorAll(
 
         /*
           Update URL hash without
-          causing browser jump.
+          triggering default jump.
         */
 
         history.pushState(
@@ -1577,7 +2056,9 @@ document.querySelectorAll(
             ()=>{
 
               map.invalidateSize({
+
                 pan:false
+
               });
 
             },
@@ -1602,3 +2083,10 @@ document.querySelectorAll(
    ========================================================= */
 
 applyLanguage();
+/* =========================================================
+   END OF SCRIPT
+   ========================================================= */
+
+console.log(
+  `KALBAR FIRE PATTERN WebGIS v${VERSION} initialized.`
+);
