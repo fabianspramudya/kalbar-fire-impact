@@ -793,43 +793,65 @@ function renderLayers(){
       }
 
     ).addTo(map);
+ /* =========================================================
+   2. OIL PALM CONCESSIONS
+   ========================================================= */
 
+palmLayer=
+  L.geoJSON(
 
-  /*
-    -------------------------------------------------------
-    2. OIL PALM CONCESSIONS
-    -------------------------------------------------------
-  */
+    palmData,
 
-  palmLayer=
-    L.geoJSON(
+    {
 
-      palmData,
+      pane:"palmPane",
 
-      {
+      style:{
 
-        pane:"palmPane",
+        color:"#47723f",
 
-        style:{
+        weight:0.65,
 
-          color:"#47723f",
+        fillColor:"#6c9a5c",
 
-          weight:0.65,
+        fillOpacity:0.16
 
-          fillColor:"#6c9a5c",
+      },
 
-          fillOpacity:0.16
+      onEachFeature:(f,l)=>{
 
-        },
+        const p=f.properties || {};
 
-        onEachFeature:(f,l)=>{
-        // No concession/company information shown on hover.
-        }
+        const commodity =
+          p.commodity ?? "—";
+
+        const hectares =
+          p.HECTARES !== undefined &&
+          p.HECTARES !== null &&
+          p.HECTARES !== ""
+            ? fmt(Number(p.HECTARES),2)
+            : "—";
+      
+        l.bindTooltip(
+
+          `<strong>Commodity:</strong> ${commodity}<br>
+           <strong>Hectares:</strong> ${hectares}<br>`,
+
+          {
+
+            sticky:true,
+
+            direction:"top"
+
+          }
+
+        );
 
       }
 
-    ).addTo(map);
+    }
 
+  ).addTo(map);
 
   /*
     -------------------------------------------------------
